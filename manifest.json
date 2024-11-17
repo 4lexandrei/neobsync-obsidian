@@ -1,0 +1,11 @@
+{
+	"id": "neobsync-obsidian",
+	"name": "Neobsync Obsidian",
+	"version": "1.0.0",
+	"minAppVersion": "0.15.0",
+	"description": "Syncs neovim with obsidian.",
+	"author": "Alexandrei John Vecinal",
+	"authorUrl": "https://obsidian.md",
+	"fundingUrl": "https://obsidian.md/pricing",
+	"isDesktopOnly": true
+}
