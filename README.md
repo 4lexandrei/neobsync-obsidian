@@ -29,3 +29,21 @@ mkdir -p ~/<path_to_obsidian_vault>/.obsidian/plugins/neobsync-obsidian
 cp main.js ~/<path_to_obsidian_vault>/.obsidian/plugins/neobsync-obsidian
 cp manifest.json ~/<path_to_obsidian_vault>/.obsidian/plugins/neobsync-obsidian
 ```
+
+# Updating
+
+Update by pulling the latest changes, updating the dependencies and rebuilding:
+
+```bash
+cd <neobsync-obsidian_path>
+git pull
+npm update
+npm run build
+```
+
+Finally, override plugin files in the obsidian vault;
+
+```bash
+cp main.js ~/<path_to_obsidian_vault>/.obsidian/plugins/neobsync-obsidian
+cp manifest.json ~/<path_to_obsidian_vault>/.obsidian/plugins/neobsync-obsidian
+```
