@@ -1,4 +1,5 @@
 import * as dgram from "dgram";
+import { logger } from "src/logging";
 import { ProtocolMessage } from "src/protocol/messages";
 
 export class UdpServer {
@@ -26,7 +27,7 @@ export class UdpServer {
 
 			const address = this.socket.address();
 
-			console.log(
+			logger.info(
 				`UDP - server listening on ${address.address}:${address.port}`,
 			);
 		});
@@ -35,7 +36,7 @@ export class UdpServer {
 			const data = msg.toString("utf-8").trim();
 
 			if (!data) {
-				console.error("UDP - Received empty UDP message");
+				logger.error("UDP - Received empty UDP message");
 				return;
 			}
 
@@ -44,23 +45,23 @@ export class UdpServer {
 			try {
 				message = JSON.parse(data);
 			} catch (err) {
-				console.error("UDP - Error parsing JSON:", err);
+				logger.error("UDP - Error parsing JSON:", err);
 				return;
 			}
 
 			try {
 				if (this.messageHandler) await this.messageHandler(message);
 			} catch (err) {
-				console.error("UDP - Error handling message:", err);
+				logger.error("UDP - Error handling message:", err);
 			}
 		});
 
 		this.socket.on("close", () => {
-			console.log("UDP - server closed");
+			logger.info("UDP - server closed");
 		});
 
 		this.socket.on("error", (err) => {
-			console.error(`UDP - server error: ${err.stack}`);
+			logger.error(`UDP - server error: ${err.stack}`);
 		});
 	}
 
@@ -72,7 +73,7 @@ export class UdpServer {
 	restart(port: number): void {
 		if (this.port === port) return;
 
-		console.log("UDP - restarting server...");
+		logger.info("UDP - restarting server...");
 
 		this.close();
 		this.port = port;

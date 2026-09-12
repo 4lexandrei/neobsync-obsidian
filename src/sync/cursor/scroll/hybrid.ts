@@ -1,4 +1,5 @@
 import { App } from "obsidian";
+import { logger } from "src/logging";
 import { findSection, MarkdownSection } from "src/markdown";
 import { UpdateCursorParams } from "src/protocol/messages";
 import { ScrollStrategy } from ".";
@@ -10,7 +11,7 @@ export class HybridScrollStrategy implements ScrollStrategy {
 		const activeFile = this.app.workspace.getActiveFile();
 
 		if (!activeFile) {
-			console.log("No active file");
+			logger.info("No active file");
 			return;
 		}
 
@@ -72,7 +73,7 @@ export class HybridScrollStrategy implements ScrollStrategy {
 				const renderedSection = findSection(sourcePath, targetLine);
 
 				if (!renderedSection) {
-					console.log(
+					logger.debug(
 						`Section still not rendered for ${sourcePath} at line ${params.line}`,
 					);
 					return;
@@ -92,7 +93,7 @@ export class HybridScrollStrategy implements ScrollStrategy {
 		);
 
 		if (!(previewContainer instanceof HTMLElement)) {
-			console.log("No preview container for section");
+			logger.debug("No preview container for section");
 			return;
 		}
 
@@ -123,7 +124,7 @@ export class HybridScrollStrategy implements ScrollStrategy {
 				containerRect.top +
 				sectionOffset;
 
-			console.log(
+			logger.debug(
 				`Long section ${section.lineStart}-${section.lineEnd}`,
 				`line=${params.line}`,
 				`percentage=${sectionPercentage}`,
@@ -142,12 +143,12 @@ export class HybridScrollStrategy implements ScrollStrategy {
 		const targetScrollTop =
 			previewContainer.scrollTop + elementRect.top - containerRect.top;
 
-		console.log(
+		logger.debug(
 			`Line ${params.line} -> lines ${section.lineStart}-${section.lineEnd}`,
 			section.element,
 		);
 
-		console.log("Scrolling to:", targetScrollTop);
+		logger.debug("Scrolling to:", targetScrollTop);
 
 		requestAnimationFrame(() => {
 			previewContainer.scrollTo({

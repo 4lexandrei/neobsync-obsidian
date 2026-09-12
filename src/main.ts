@@ -10,6 +10,7 @@ import { createDispatcher } from "./protocol/dispatcher";
 import { createScrollStrategy } from "./sync/cursor/scroll";
 import { CursorSync } from "./sync/cursor";
 import { BufferSync } from "./sync/buffer";
+import { logger } from "./logging";
 
 export default class Neobsync extends Plugin {
 	settings: NeobsyncSettings;
@@ -18,6 +19,8 @@ export default class Neobsync extends Plugin {
 
 	async onload() {
 		await this.loadSettings();
+
+		logger.setLevel("warn");
 
 		const scrollStrategy = createScrollStrategy(
 			this.settings.scrollMethod,
@@ -34,10 +37,10 @@ export default class Neobsync extends Plugin {
 
 		this.registerMarkdownPostProcessor((element, context) => {
 			registerSection(element, context);
-			// const sectionInfo = context.getSectionInfo(element);
-			// 	console.log("Element:", element);
-			// console.log("Context:", context);
-			// console.log("Section info:", sectionInfo);
+			const sectionInfo = context.getSectionInfo(element);
+			logger.debug("Element:", element);
+			logger.debug("Context:", context);
+			logger.debug("Section info:", sectionInfo);
 		});
 
 		this.addSettingTab(new NeobsyncSettingTab(this.app, this));
@@ -46,7 +49,7 @@ export default class Neobsync extends Plugin {
 		this.server.onMessage(dispatcher);
 		this.server.start();
 
-		console.log("Neobsync has been loaded");
+		logger.info("Neobsync has been loaded");
 	}
 
 	async loadSettings() {
@@ -62,7 +65,7 @@ export default class Neobsync extends Plugin {
 	}
 
 	onunload() {
-		console.log("Neobsync unloaded");
+		logger.info("Neobsync unloaded");
 		this.server.close();
 	}
 }

@@ -1,4 +1,5 @@
 import { App } from "obsidian";
+import { logger } from "src/logging";
 import { findSection } from "src/markdown";
 import { UpdateCursorParams } from "src/protocol/messages";
 import { ScrollStrategy } from ".";
@@ -10,7 +11,7 @@ export class SectionScrollStrategy implements ScrollStrategy {
 		const activeFile = this.app.workspace.getActiveFile();
 
 		if (!activeFile) {
-			console.log("No active file");
+			logger.info("No active file");
 			return;
 		}
 
@@ -28,7 +29,7 @@ export class SectionScrollStrategy implements ScrollStrategy {
 		const section = findSection(sourcePath, params.line - 1);
 
 		if (!section) {
-			console.log(
+			logger.debug(
 				`No rendered section found for ${sourcePath} at line ${params.line}`,
 			);
 			return;
@@ -43,11 +44,11 @@ export class SectionScrollStrategy implements ScrollStrategy {
 		// );
 
 		if (!(previewContainer instanceof HTMLElement)) {
-			console.log("No preview container for section");
+			logger.debug("No preview container for section");
 			return;
 		}
 
-		console.log(
+		logger.debug(
 			`Line ${params.line} -> lines ${section.lineStart}-${section.lineEnd}`,
 			section.element,
 		);
@@ -58,7 +59,7 @@ export class SectionScrollStrategy implements ScrollStrategy {
 		const targetScrollTop =
 			previewContainer.scrollTop + elementRect.top - containerRect.top;
 
-		console.log("Scrolling to:", targetScrollTop);
+		logger.debug("Scrolling to:", targetScrollTop);
 
 		requestAnimationFrame(() => {
 			previewContainer.scrollTo({
