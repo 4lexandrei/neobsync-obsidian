@@ -5,7 +5,6 @@
 	"minAppVersion": "0.15.0",
 	"description": "Syncs neovim with obsidian.",
 	"author": "Alexandrei John Vecinal",
-	"authorUrl": "https://obsidian.md",
-	"fundingUrl": "https://obsidian.md/pricing",
+	"authorUrl": "https://github.com/4lexandrei",
 	"isDesktopOnly": true
 }
