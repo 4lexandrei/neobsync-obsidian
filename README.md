@@ -5,45 +5,62 @@ neobsync-obsidian is a plugin for Obsidian that allows synchronization with Neov
 > [!NOTE]
 > This plugin works alongside [`neobsync.nvim`](https://github.com/4lexandrei/neobsync.nvim)
 
-# Installation
+## 📦 Installation
 
-Local installation
+### Requirements
+
+- Node.js
+- npm
+- An existing Obsidian vault
+
+Clone the repository:
 
 ```bash
 git clone https://github.com/4lexandrei/neobsync-obsidian.git
-```
-
-Install dependencies and finally build
-
-```bash
 cd neobsync-obsidian
-npm install
-npm run build
 ```
 
-Building should output `main.js`
-The final step would be copying `main.js` and `manifest.json` inside the obsidian vault plugins directory
+Run the installation script:
 
 ```bash
-mkdir -p ~/<path_to_obsidian_vault>/.obsidian/plugins/neobsync-obsidian
-cp main.js ~/<path_to_obsidian_vault>/.obsidian/plugins/neobsync-obsidian
-cp manifest.json ~/<path_to_obsidian_vault>/.obsidian/plugins/neobsync-obsidian
+./scripts/install.sh ~/<path_to_obsidian_vault>
 ```
 
-# Updating
+Enable the plugin:
 
-Update by pulling the latest changes, updating the dependencies and rebuilding:
+1. In Obsidian, open Settings.
+2. In the side menu, select Community plugins.
+3. Select Turn on community plugins.
+4. Under Installed plugins, enable Neobsync Obsidian by selecting the toggle button next to it.
+
+## 🔄 Updating
+
+Pull the latest changes and run the installer:
 
 ```bash
 cd <neobsync-obsidian_path>
 git pull
-npm update
-npm run build
+./scripts/install.sh ~/<path_to_obsidian_vault>
 ```
 
-Finally, override plugin files in the obsidian vault;
+This installer will update the plugin files in the vault
+
+## 🛠️ Development setup
 
 ```bash
-cp main.js ~/<path_to_obsidian_vault>/.obsidian/plugins/neobsync-obsidian
-cp manifest.json ~/<path_to_obsidian_vault>/.obsidian/plugins/neobsync-obsidian
+git clone https://github.com/4lexandrei/neobsync-obsidian.git
+cd neobsync-obsidian
+```
+
+Install dependencies:
+
+```
+npm install
+npm run dev
+```
+
+Use symlink script helper for quick setup:
+
+```
+npm run symlink ~/<path_to_obsidian_vault>
 ```
